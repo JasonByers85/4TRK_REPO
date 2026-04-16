@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4TRK User Manual</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0e0e12;
+    --surface: #16161d;
+    --surface2: #1e1e28;
+    --border: #2a2a38;
+    --text: #d4d4dc;
+    --text-dim: #8888a0;
+    --accent: #f0a030;
+    --accent-dim: #c07820;
+    --accent-glow: rgba(240, 160, 48, 0.15);
+    --key: #e8e0d0;
+    --key-dark: #282830;
+    --code-bg: #1a1a24;
+    --link: #f0a030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── Layout ───────────────────────────────────────────── */
+
+  .wrapper {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── Header ───────────────────────────────────────────── */
+
+  .hero {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .hero h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 32px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 30px var(--accent-glow);
+  }
+
+  .hero p {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .hero .hint {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .hero .hint kbd {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--accent);
+  }
+
+  /* ── Install Strip ────────────────────────────────────── */
+
+  .install-strip {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .install-strip code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .install-strip .os-label {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .install-strip .os-note {
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  /* ── Table of Contents ────────────────────────────────── */
+
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+
+  .toc h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .toc ol {
+    columns: 2;
+    column-gap: 32px;
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    margin-bottom: 6px;
+    break-inside: avoid;
+  }
+
+  .toc li a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+  }
+
+  .toc li a::before {
+    content: counter(toc) ". ";
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .toc li a:hover { color: var(--accent); }
+
+  /* ── Sections ─────────────────────────────────────────── */
+
+  section {
+    margin-bottom: 56px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    padding-top: 8px;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 32px 0 12px;
+  }
+
+  p { margin-bottom: 14px; }
+
+  strong { color: #fff; font-weight: 600; }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  ul, ol { margin: 0 0 16px 24px; }
+  li { margin-bottom: 6px; }
+
+  /* ── Screenshots ──────────────────────────────────────── */
+
+  .screenshot {
+    margin: 24px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .screenshot img {
+    width: 100%;
+    display: block;
+    image-rendering: pixelated;
+  }
+
+  .screenshot.narrow {
+    max-width: 360px;
+  }
+
+  .screenshot .placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-size: 14px;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .screenshot .placeholder .label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--accent-dim);
+    letter-spacing: 1px;
+  }
+
+  .screenshot figcaption {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Keyboard Diagram ─────────────────────────────────── */
+
+  .keyboard-diagram {
+    margin: 28px 0;
+    padding: 28px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .keyboard-diagram .kb-title {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .kb-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px;
+    justify-content: center;
+  }
+
+  .kb-row.black-keys { margin-bottom: 4px; }
+
+  .kb-key {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 52px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid;
+    transition: transform 0.1s;
+  }
+
+  .kb-key:hover { transform: translateY(-2px); }
+
+  .kb-key.white {
+    background: var(--key);
+    color: #1a1a20;
+    border-color: #c8c0b0;
+  }
+
+  .kb-key.black {
+    background: var(--key-dark);
+    color: #d0d0d8;
+    border-color: #404050;
+    width: 52px;
+    height: 48px;
+  }
+
+  .kb-key.spacer {
+    background: transparent;
+    border: none;
+    width: 52px;
+    pointer-events: none;
+  }
+
+  .kb-key .note {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  .kb-octave {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .kb-octave kbd {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: 'Inter', sans-serif;
+    color: var(--accent);
+    font-size: 16px;
+  }
+
+  /* ── Tables ───────────────────────────────────────────── */
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+
+  thead th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--surface);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  tbody td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr:hover { background: var(--accent-glow); }
+
+  /* ── Kbd inline keys ──────────────────────────────────── */
+
+  kbd {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ── Step indicators ──────────────────────────────────── */
+
+  .steps { counter-reset: steps; }
+  .steps .step { counter-increment: steps; margin-bottom: 20px; }
+  .steps .step h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .steps .step h4::before {
+    content: "Step " counter(steps) ": ";
+    color: var(--accent);
+  }
+
+  /* ── Tip callout ──────────────────────────────────────── */
+
+  .tip {
+    background: var(--accent-glow);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  .tip strong { color: var(--accent); }
+
+  /* ── Responsive ───────────────────────────────────────── */
+
+  @media (max-width: 640px) {
+    .toc ol { columns: 1; }
+    .kb-key { width: 44px; height: 44px; font-size: 12px; }
+    .kb-key.black { width: 40px; height: 40px; }
+    .kb-key.spacer { width: 40px; }
+    .hero h1 { font-size: 22px; }
+    h2 { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<header class="hero">
+  <h1>4TRK</h1>
+  <p>A retro 4-track pattern sequencer for making beats, melodies, and full songs.</p>
+  <div class="hint">
+    Press <kbd>?</kbd> on any screen in the app for instant help.
+    Click <strong>TUT</strong> to start a guided walkthrough.
+  </div>
+  <div class="install-strip">
+    Download the zip for your OS, extract, and run.<br>
+    <span class="os-label">macOS</span> &mdash; double-click <code>4TRK.app</code>
+    <span class="os-note">(first launch: right-click &rarr; Open, or System Settings &rarr; Privacy &amp; Security &rarr; Open Anyway)</span><br>
+    <span class="os-label">Windows</span> &mdash; run <code>4TRK.exe</code><br>
+    <span class="os-label">Linux</span> &mdash; run <code>./4TRK</code>
+    <span class="os-note">(needs PortAudio: <code>apt install libportaudio2</code> / <code>dnf install portaudio</code> / <code>pacman -S portaudio</code>)</span>
+  </div>
+  <div class="hint" style="margin-top: 12px; font-size: 12px; color: var(--accent);">
+    <strong>Early Access</strong> &mdash; 4TRK is under active development. Features may change, and you may encounter rough edges. Feedback and bug reports are welcome!
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TABLE OF CONTENTS -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#main-screen">The Main Screen</a></li>
+    <li><a href="#first-beat">Your First Beat</a></li>
+    <li><a href="#melody">Adding a Melody</a></li>
+    <li><a href="#live-keys">Playing Notes Live</a></li>
+    <li><a href="#sounds">Shaping Your Sounds</a></li>
+    <li><a href="#step-fx">Per-Step Drum FX</a></li>
+    <li><a href="#tape">The Tape Deck</a></li>
+    <li><a href="#song">Building a Song</a></li>
+    <li><a href="#mixer">The Mixer</a></li>
+    <li><a href="#polyrhythm">Polyrhythms &amp; Extended Patterns</a></li>
+    <li><a href="#arp">Arpeggiator &amp; Randomizer</a></li>
+    <li><a href="#export">Exporting Your Music</a></li>
+    <li><a href="#midi">MIDI &amp; Gamepads</a></li>
+    <li><a href="#launchpad">Launchpad Mini MK3</a></li>
+    <li><a href="#tips">Tips &amp; Tricks</a></li>
+    <li><a href="#shortcuts">Keyboard Shortcuts</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ol>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 1. THE MAIN SCREEN -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="main-screen">
+  <h2>1. The Main Screen</h2>
+
+  <p>When you launch 4TRK, a short CRT boot animation plays, then you land on the main grid. This is where everything happens.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: screenshot of the full main screen with a beat filled in -->
+    <img src="screenshots/main-screen.png" alt="4TRK main screen overview"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>main-screen.png<br>Full main screen with a drum pattern filled in, playhead visible</div>'">
+    <figcaption>The main grid: 8 drum rows, 3 synth tracks, tape track, header and footer controls.</figcaption>
+  </figure>
+
+  <h3>Header</h3>
+  <ul>
+    <li><strong>4TRK</strong> logo</li>
+    <li><strong>A B C D</strong> &mdash; pattern banks (8 patterns each = 32 total)</li>
+    <li><strong>[16]</strong> &mdash; step count badge. Click to extend to 32 or 64 steps</li>
+    <li><strong>1&ndash;8</strong> &mdash; pattern buttons. Click to switch patterns</li>
+    <li><strong>120</strong> &mdash; current BPM</li>
+  </ul>
+
+  <h3>Drum Rows (KK &ndash; CY)</h3>
+  <p>8 drum tracks. Each cell is a 16th-note step. The labels are: KK (kick), SN (snare), HH (closed hihat), OH (open hihat), CP (clap), TM (tom), RM (rim), CY (cymbal).</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: close-up of drum rows with some cells filled -->
+    <img src="screenshots/drum-rows.png" alt="Drum grid close-up"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>drum-rows.png<br>Close-up of drum rows with hits placed, showing soft/hard cells and mute bars</div>'">
+    <figcaption>Drum cells cycle through: off, soft hit (dim), hard hit (bright). Mute/solo bars on the left edge.</figcaption>
+  </figure>
+
+  <h3>Synth Rows (S1, S2, S3)</h3>
+  <p>3 polyphonic synth tracks. Cells show note names when notes are placed. Click a cell to open the piano roll.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: close-up of synth rows showing note names in cells, different colours per track -->
+    <img src="screenshots/synth-rows.png" alt="Synth rows close-up"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>synth-rows.png<br>Close-up of the S1, S2, S3 synth rows with note names visible in cells, track colours distinct</div>'">
+    <figcaption>Synth rows with placed notes. Each cell shows the note name; click to open the piano roll.</figcaption>
+  </figure>
+
+  <h3>Tape Track (TP)</h3>
+  <p>Shows a cassette icon and the waveform of recorded audio. Click to open the tape deck.</p>
+
+  <h3>Footer</h3>
+
+  <figure class="screenshot">
+    <!-- REPLACE: close-up of footer controls -->
+    <img src="screenshots/footer-controls.png" alt="Footer controls"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>footer-controls.png<br>Footer showing transport, BPM, kit selector, file buttons, SONG/EDT/LOOP, utilities</div>'">
+    <figcaption>Footer: transport, BPM, kit browser, file operations (top row), song/utility controls (bottom row).</figcaption>
+  </figure>
+
+  <ul>
+    <li><strong>Transport:</strong> play button, BPM controls (click the number for tap tempo)</li>
+    <li><strong>Kit selector:</strong> browse drum kits with &lt; &gt; arrows</li>
+    <li><strong>File buttons:</strong> NEW, SAVE, SAVE AS, LOAD, EXPORT (WAV)</li>
+    <li><strong>SONG / EDT / LOOP:</strong> song mode, song arranger, loop toggle</li>
+    <li><strong>LV:</strong> LIVE mode (synth params stay locked across patterns)</li>
+    <li><strong>SW:</strong> swing amount &mdash; <strong>VL:</strong> master volume</li>
+    <li><strong>LEN / CLR / QNT / RND / MIX:</strong> length, clear, quantize, randomize, mixer</li>
+    <li><strong>?</strong> help &mdash; <strong>*</strong> settings</li>
+  </ul>
+
+  <figure class="screenshot">
+    <!-- REPLACE: help overlay open on the main grid showing keyboard shortcuts and TUT button -->
+    <img src="screenshots/help-overlay.png" alt="Help overlay"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>help-overlay.png<br>Help overlay open on main grid showing keyboard shortcuts, mouse controls, and TUT button to start tutorial</div>'">
+    <figcaption>Press ? on any screen for context-sensitive help. Click TUT to start a guided tutorial.</figcaption>
+  </figure>
+
+  <h3>Left-Edge Bars</h3>
+  <p>Between labels and the grid, each drum row has small bars:</p>
+  <ul>
+    <li>Click the <strong>top bar</strong> to adjust drum pitch</li>
+    <li>Click the <strong>bottom bar</strong> to adjust drum volume</li>
+    <li>Click the bar itself to <strong>mute</strong>; Shift+click to <strong>solo</strong></li>
+  </ul>
+
+  <figure class="screenshot narrow">
+    <!-- REPLACE: close-up of left-edge bars showing pitch/volume/mute indicators per drum row -->
+    <img src="screenshots/left-edge-bars.png" alt="Left-edge mute and volume bars"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>left-edge-bars.png<br>Close-up of left-edge bars between drum labels and grid, showing pitch bars, volume bars, and mute/solo state</div>'">
+    <figcaption>Left-edge bars: pitch (top), volume (bottom). Click to mute, Shift+click to solo.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 2. YOUR FIRST BEAT -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="first-beat">
+  <h2>2. Your First Beat</h2>
+  <p>Let's make a beat in under a minute.</p>
+
+  <div class="steps">
+    <div class="step">
+      <h4>Add a kick drum</h4>
+      <p>Click cells in the <strong>KK</strong> row on beats 1, 5, 9, and 13 (the downbeats). Each click cycles through: off, soft hit, hard hit. You'll see the cells light up.</p>
+    </div>
+
+    <div class="step">
+      <h4>Add a snare</h4>
+      <p>Click cells in the <strong>SN</strong> row on beats 5 and 13 (the backbeat).</p>
+    </div>
+
+    <div class="step">
+      <h4>Add hihats</h4>
+      <p>Click every other cell in the <strong>HH</strong> row (1, 3, 5, 7, 9, 11, 13, 15) for 8th-note hihats. Or click every cell for a driving 16th-note pattern.</p>
+    </div>
+
+    <div class="step">
+      <h4>Press Space to play</h4>
+      <p>You should hear your beat looping. The playhead moves across the grid highlighting the current step.</p>
+    </div>
+  </div>
+
+  <figure class="screenshot">
+    <!-- REPLACE: main grid with a basic kick/snare/hihat pattern filled in, playhead visible -->
+    <img src="screenshots/first-beat.png" alt="A basic beat pattern"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>first-beat.png<br>Main grid with kick on 1/5/9/13, snare on 5/13, hihats on every other step, playhead moving</div>'">
+    <figcaption>A basic four-on-the-floor beat with snare backbeat and 8th-note hihats.</figcaption>
+  </figure>
+
+  <div class="steps">
+    <div class="step" style="counter-increment: steps 4">
+      <h4>Adjust the tempo</h4>
+      <p>Click the <strong>+</strong> and <strong>-</strong> buttons around the BPM number to change speed. Or click the BPM number itself repeatedly to <strong>tap tempo</strong>.</p>
+    </div>
+
+    <div class="step">
+      <h4>Experiment</h4>
+      <ul>
+        <li>Click a filled cell again to change it from soft to hard hit (or remove it)</li>
+        <li>Right-click a drum label (like KK or SN) to open track tools: fill, randomize, set length, or clear</li>
+        <li>Try adding hits on CP (clap), TM (tom), RM (rim), and CY (cymbal)</li>
+      </ul>
+
+      <figure class="screenshot">
+        <!-- REPLACE: right-click context menu on a drum label showing fill/randomize/length/clear options -->
+        <img src="screenshots/drum-right-click.png" alt="Drum right-click menu"
+             onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>drum-right-click.png<br>Right-click context menu on a drum label showing fill, randomize, set length, and clear options</div>'">
+        <figcaption>Right-click a drum label for quick tools: fill patterns, randomize, set track length, or clear.</figcaption>
+      </figure>
+    </div>
+
+    <div class="step">
+      <h4>Save your work</h4>
+      <p>Click <strong>SAVE</strong> in the footer. Type a name and press Enter. Your project is saved as a tiny .4trk file.</p>
+
+      <figure class="screenshot narrow">
+        <!-- REPLACE: close-up of the file buttons row: NEW, SAVE, SAVE AS, LOAD, EXP -->
+        <img src="screenshots/save-buttons.png" alt="New, Save, Save As buttons"
+             onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>save-buttons.png<br>Close-up of the file buttons row: NEW, SAVE, SAVE AS, LOAD, EXP</div>'">
+        <figcaption>The file buttons: NEW, SAVE, SAVE AS, LOAD, and EXPORT.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 3. ADDING A MELODY -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="melody">
+  <h2>3. Adding a Melody</h2>
+  <p>Now let's add some notes on top of your beat.</p>
+
+  <div class="steps">
+    <div class="step">
+      <h4>Open the piano roll</h4>
+      <p>Click any cell in the <strong>S1</strong> row. The piano roll opens &mdash; a grid with pitch on the vertical axis and time (steps) on the horizontal axis.</p>
+    </div>
+
+    <div class="step">
+      <h4>Place a note</h4>
+      <p>Click anywhere on the grid. A note appears. The pitch is determined by the row you click, and the position by the column.</p>
+    </div>
+
+    <div class="step">
+      <h4>Move and resize notes</h4>
+      <ul>
+        <li><strong>Drag a note</strong> to move it (changes both pitch and position)</li>
+        <li><strong>Drag the right edge</strong> of a note to make it longer or shorter</li>
+        <li><strong>Right-click</strong> a note to delete it</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="screenshot">
+    <!-- REPLACE: piano roll with several notes placed, chord stamps visible in toolbar -->
+    <img src="screenshots/piano-roll.png" alt="Piano roll editor"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>piano-roll.png<br>Piano roll with notes placed at different pitches and lengths, toolbar showing chord stamps and note lengths</div>'">
+    <figcaption>The piano roll: click to place notes, drag to move, drag right edge to resize.</figcaption>
+  </figure>
+
+  <div class="steps">
+    <div class="step" style="counter-increment: steps 3">
+      <h4>Use chord stamps</h4>
+      <p>The toolbar has chord buttons: <strong>-- MA MI 7T M7 S4</strong> (none, major, minor, 7th, minor 7th, sus4). Select one before clicking to place a full chord.</p>
+    </div>
+
+    <div class="step">
+      <h4>Set note length</h4>
+      <p>The toolbar also has length buttons: <strong>1 2 4 8 16</strong> (in steps). Select a length before placing notes.</p>
+    </div>
+
+    <div class="step">
+      <h4>Listen</h4>
+      <p>Press <kbd>Space</kbd> to play. Toggle <strong>FLW</strong> in the bottom toolbar to follow the playhead.</p>
+    </div>
+  </div>
+
+  <p><strong>Other toolbar buttons:</strong>
+    <strong>DUP</strong> (duplicate first bar),
+    <strong>RND</strong> (randomize),
+    <strong>CLR</strong> (clear),
+    <strong>QNT</strong> (quantize),
+    <strong>ARP</strong> (arpeggiator),
+    <strong>REC</strong> (record arm),
+    <strong>AUT</strong> (per-note automation).
+  </p>
+  <p>Press <kbd>Escape</kbd> to close the piano roll and return to the main grid.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 4. PLAYING NOTES LIVE -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="live-keys">
+  <h2>4. Playing Notes Live</h2>
+  <p>Your computer keyboard doubles as a piano. This works on the main grid, in the piano roll, in the synth editor, and in the tape deck.</p>
+
+  <div class="keyboard-diagram">
+    <div class="kb-title">Black Keys (sharps)</div>
+    <div class="kb-row black-keys">
+      <div class="kb-key black">S<span class="note">C#</span></div>
+      <div class="kb-key black">D<span class="note">D#</span></div>
+      <div class="kb-key spacer"></div>
+      <div class="kb-key black">G<span class="note">F#</span></div>
+      <div class="kb-key black">H<span class="note">G#</span></div>
+      <div class="kb-key black">J<span class="note">A#</span></div>
+      <div class="kb-key spacer"></div>
+      <div class="kb-key black">L<span class="note">C#</span></div>
+    </div>
+    <div class="kb-title" style="margin-top: 8px">White Keys</div>
+    <div class="kb-row">
+      <div class="kb-key white">Z<span class="note">C</span></div>
+      <div class="kb-key white">X<span class="note">D</span></div>
+      <div class="kb-key white">C<span class="note">E</span></div>
+      <div class="kb-key white">V<span class="note">F</span></div>
+      <div class="kb-key white">B<span class="note">G</span></div>
+      <div class="kb-key white">N<span class="note">A</span></div>
+      <div class="kb-key white">M<span class="note">B</span></div>
+      <div class="kb-key white">,<span class="note">C</span></div>
+      <div class="kb-key white">.<span class="note">D</span></div>
+    </div>
+    <div class="kb-octave">
+      <span><kbd>[</kbd> octave down</span>
+      <span><kbd>]</kbd> octave up</span>
+      <span style="color:var(--text-dim)">(range: 1&ndash;6)</span>
+    </div>
+  </div>
+
+  <p>The layout mirrors a real piano: <kbd>S</kbd> and <kbd>D</kbd> sit between <kbd>Z</kbd>, <kbd>X</kbd>, and <kbd>C</kbd> just like black keys sit between white keys.</p>
+
+  <h3>Recording with the Keyboard</h3>
+  <ol>
+    <li>Press <kbd>1</kbd>, <kbd>2</kbd>, or <kbd>3</kbd> to arm a synth track for recording (the label flashes red)</li>
+    <li>Press <kbd>Space</kbd> to start playback</li>
+    <li>Play notes on the keyboard &mdash; they are recorded into the pattern, quantized to the nearest step</li>
+    <li>Press <kbd>Space</kbd> again to stop</li>
+  </ol>
+
+  <p>Velocity (how hard the note plays) is controlled with <kbd>+</kbd> / <kbd>-</kbd> keys.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: main grid with a synth track armed for recording (label flashing red), playhead moving -->
+    <img src="screenshots/record-armed.png" alt="Track armed for recording"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>record-armed.png<br>Main grid with S1 track armed for recording (label highlighted red), playhead active, notes being recorded</div>'">
+    <figcaption>A synth track armed for recording: the label turns red. Play notes while the pattern loops.</figcaption>
+  </figure>
+
+  <div class="tip">
+    <strong>Tip:</strong> If you have a MIDI keyboard or controller plugged in, it's auto-detected and works the same way &mdash; notes are routed to the armed track.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 5. SHAPING YOUR SOUNDS -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="sounds">
+  <h2>5. Shaping Your Sounds</h2>
+
+  <h3>Synth Editor</h3>
+  <p>Click a synth label (<strong>S1</strong>, <strong>S2</strong>, or <strong>S3</strong>) to open the synth editor.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: synth editor showing knobs, mode tabs, preset name -->
+    <img src="screenshots/synth-editor.png" alt="Synth editor"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>synth-editor.png<br>Synth editor with knob rows, mode tabs (SYN DUO FM WTB SFZ), preset name, LIVE indicator</div>'">
+    <figcaption>The synth editor: three rows of knobs, mode tabs at top, preset browser.</figcaption>
+  </figure>
+
+  <p><strong>Synth modes</strong> (press <kbd>Tab</kbd> to cycle):</p>
+  <table>
+    <thead><tr><th>Mode</th><th>Name</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>SYN</td><td>Single Osc</td><td>Square/saw/sine + detune, pulse width, sub-osc, noise</td></tr>
+      <tr><td>DUO</td><td>Dual Osc</td><td>Two oscillators (A+B) with crossfade mix</td></tr>
+      <tr><td>FM</td><td>FM Synth</td><td>2-operator FM synthesis &mdash; great for bells, basses, metallic sounds</td></tr>
+      <tr><td>WTB</td><td>Wavetable</td><td>Morphable wavetable oscillator. Drop custom .wav in ~/Documents/4TRK/wavetables/</td></tr>
+      <tr><td>SFZ</td><td>Sampler</td><td>Load sample-based instruments from ~/Documents/4TRK/sfz/</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Knob rows:</strong></p>
+  <ul>
+    <li><strong>Row 1:</strong> ATK DCY SUS REL VOL &mdash; the ADSR envelope and volume</li>
+    <li><strong>Row 2:</strong> DLY DTM DFB BCR RVB CHR &mdash; delay, time, feedback, bitcrush, reverb, chorus</li>
+    <li><strong>Row 3:</strong> RES LFR LFD + mode-specific knobs</li>
+  </ul>
+
+  <p><strong>Working with knobs:</strong> click and drag up/down to adjust, right-click to reset to default, or use <kbd>Left</kbd>/<kbd>Right</kbd> to navigate and <kbd>Up</kbd>/<kbd>Down</kbd> to adjust.</p>
+
+  <p><strong>Presets:</strong> Click <strong>&lt;</strong> and <strong>&gt;</strong> to browse 145+ factory presets. Hit <strong>SAVE</strong> to save your own. Browse presets from anywhere with <kbd>Cmd</kbd>+<kbd>Left</kbd>/<kbd>Right</kbd>.</p>
+
+  <p><strong>MIDI learn:</strong> Press <kbd>L</kbd>, click any knob, then twist a knob on your MIDI controller. The mapping is saved automatically.</p>
+
+  <h3>Drum Editor</h3>
+  <p>Click a drum label (<strong>KK</strong>, <strong>SN</strong>, etc.) to open the drum editor.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: drum editor showing waveform with trim handles and FX bars -->
+    <img src="screenshots/drum-editor.png" alt="Drum editor"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>drum-editor.png<br>Drum editor in sample mode: waveform with trim handles, FX bars (REV DRV BIT LFI FLT DCY), send bars</div>'">
+    <figcaption>The drum editor: sample waveform with trim handles, effect bars, recording controls.</figcaption>
+  </figure>
+
+  <p>Each drum can be <strong>sample-based</strong> or <strong>synthesized</strong>:</p>
+  <ul>
+    <li><strong>Sample mode:</strong> waveform with START/END trim, FX bars (REV, DRV, BIT, LFI, FLT, DCY)</li>
+    <li><strong>Synth mode:</strong> click SYNTH to switch. Fully generated drums with tweakable parameters</li>
+    <li><strong>REC:</strong> record a new sample from mic or internal audio</li>
+    <li><strong>BOUNCE:</strong> render the current drum pattern to a sample. <em>Note: bouncing a long pattern (e.g. 64 steps) creates a large waveform &mdash; this may be heavy on older machines.</em></li>
+  </ul>
+  <p>Shared controls: DLY, RVB, PAN, STR (stereo width), TUN (pitch). Click <strong>SAVE KIT</strong> to save your 8-drum kit.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 6. PER-STEP DRUM FX -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="step-fx">
+  <h2>6. Per-Step Drum FX</h2>
+  <p>Long-press (hold click) on any drum cell to open the per-step editor:</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: per-step drum editor popup showing velocity, roll, pitch, probability controls -->
+    <img src="screenshots/step-fx.png" alt="Per-step drum FX editor"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>step-fx.png<br>Per-step popup showing VEL, ROLL, PIT, PROB, FLAM, NUDG controls</div>'">
+    <figcaption>Per-step drum FX: fine-tune every individual hit.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Parameter</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><strong>VEL</strong></td><td>Velocity &mdash; soft or hard hit</td></tr>
+      <tr><td><strong>ROLL</strong></td><td>Repeat count &mdash; 1x (normal), 2x (double), 4x (roll)</td></tr>
+      <tr><td><strong>PIT</strong></td><td>Pitch offset per step (semitones)</td></tr>
+      <tr><td><strong>PROB</strong></td><td>Probability &mdash; 25/50/75/100% chance of playing</td></tr>
+      <tr><td><strong>FLAM</strong></td><td>Double-hit timing &mdash; off, tight, or loose</td></tr>
+      <tr><td><strong>NUDG</strong></td><td>Timing offset &mdash; early, on-grid, or late</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip">
+    <strong>Tip:</strong> Set hi-hat probability to 75% for a natural feel. Add rolls on snare fills. Use pitch offsets for melodic toms. Nudge kicks slightly late for a laid-back groove.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 7. THE TAPE DECK -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="tape">
+  <h2>7. The Tape Deck</h2>
+  <p>Click the <strong>TP</strong> row to open the tape deck. It records audio and plays it back as a 4th track alongside your drums and synths. Each pattern has its own tape.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: tape deck popup with cassette animation, LCD waveform, MIC/INT switch -->
+    <img src="screenshots/tape-deck.png" alt="Tape deck"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>tape-deck.png<br>Tape deck showing cassette with spinning reels, LCD waveform, MIC/INT toggle, VOL/PAN knobs, transport buttons</div>'">
+    <figcaption>The tape deck: cassette animation, LCD waveform display, recording and effect controls.</figcaption>
+  </figure>
+
+  <h3>Recording</h3>
+  <ol>
+    <li>Select <strong>MIC</strong> (microphone) or <strong>INT</strong> (internal mix) with the toggle switch</li>
+    <li>Set the recording length (PAT, 4, 8, 16, 32, or 64 steps)</li>
+    <li>Click <strong>REC</strong> &mdash; recording starts with the next playback</li>
+    <li>Press <kbd>Space</kbd> to play. Recording stops at the set length</li>
+  </ol>
+
+  <p><strong>BNC</strong> (bounce): renders the full drum+synth mix to tape offline. Great for resampling or freeing up tracks.</p>
+
+  <h3>Tape Effects (13 Knobs)</h3>
+  <table>
+    <thead><tr><th>Knob</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td>VOL</td><td>Tape volume</td></tr>
+      <tr><td>PAN</td><td>Stereo pan</td></tr>
+      <tr><td>LOW / HI</td><td>Low and high shelf EQ</td></tr>
+      <tr><td>FLT</td><td>Lowpass filter</td></tr>
+      <tr><td>GAN</td><td>Drive / saturation</td></tr>
+      <tr><td>SPD</td><td>Playback speed / pitch</td></tr>
+      <tr><td>DLY / RVB / CHR</td><td>Delay, reverb, chorus sends</td></tr>
+      <tr><td>STR</td><td>Stereo width</td></tr>
+      <tr><td>BIT</td><td>Bitcrush</td></tr>
+      <tr><td>GAT</td><td>Noise gate</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tape Editor / Slicer</h3>
+  <p>Click <strong>EDT</strong> to open the tape editor. Drag on the waveform to select a region, then use the operation buttons:</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: tape editor/slicer with waveform, selection markers, operation buttons, drum slot buttons -->
+    <img src="screenshots/tape-slicer.png" alt="Tape editor / slicer"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>tape-slicer.png<br>Tape editor with waveform selected (cyan markers), operation buttons row, SLICE TO: drum slot buttons</div>'">
+    <figcaption>The tape slicer: select a region, apply wave operations, or slice audio to drum slots.</figcaption>
+  </figure>
+
+  <p>Operations: <strong>FD&gt;</strong> (fade in), <strong>&lt;FD</strong> (fade out), <strong>SIL</strong> (silence), <strong>REV</strong> (reverse), <strong>DUP</strong> (duplicate), <strong>STx4 / STx8</strong> (stutter), <strong>NRM</strong> (normalize), <strong>CRP</strong> (crop).</p>
+
+  <p><strong>Slice to drum:</strong> Click a drum slot (KK, SN, etc.) below the waveform to send the selected audio to that drum &mdash; instant custom samples.</p>
+
+  <div class="tip" style="border-color: var(--accent-dim);">
+    <strong>Heads up:</strong> Slicing a long region to a drum slot creates a large sample that plays back on every trigger. Bouncing a long pattern or song to tape also produces a large waveform. Both can be heavy on older machines, so if you're seeing performance issues, try working with shorter regions.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 8. BUILDING A SONG -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="song">
+  <h2>8. Building a Song</h2>
+
+  <h3>Patterns</h3>
+  <p>4TRK has 32 patterns in 4 banks: <strong>A, B, C, D</strong> (8 each). Each pattern stores drum hits, synth notes, tape audio, sound settings, and track lengths independently.</p>
+  <ul>
+    <li>Click <strong>pattern buttons 1&ndash;8</strong> to switch</li>
+    <li>Click <strong>bank buttons A&ndash;D</strong> to change banks</li>
+    <li><kbd>Shift</kbd>+<kbd>Left</kbd>/<kbd>Right</kbd> to step through patterns</li>
+    <li><kbd>Cmd</kbd>+<kbd>C</kbd> / <kbd>Cmd</kbd>+<kbd>V</kbd> to copy and paste</li>
+  </ul>
+
+  <h3>Song Arranger</h3>
+  <p>Click <strong>EDT</strong> in the footer to open the song arranger. Chain patterns into a full arrangement.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: song arranger with several rows, repeat counts, loop brackets, mini pattern previews -->
+    <img src="screenshots/song-arranger.png" alt="Song arranger"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>song-arranger.png<br>Song arranger with 8+ rows, color-coded bank strips, repeat badges, mini pattern previews, loop brackets</div>'">
+    <figcaption>The song arranger: chain patterns with repeats and loop regions.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Up</kbd> / <kbd>Down</kbd></td><td>Navigate rows</td></tr>
+      <tr><td><kbd>Left</kbd> / <kbd>Right</kbd></td><td>Change pattern number</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>Insert new row</td></tr>
+      <tr><td><kbd>Delete</kbd></td><td>Remove row</td></tr>
+      <tr><td><kbd>D</kbd></td><td>Duplicate row</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Cycle repeat count (1&ndash;4x)</td></tr>
+      <tr><td><kbd>L</kbd></td><td>Set loop start / end</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Song Mode &amp; LIVE Mode</h3>
+  <p>Click <strong>SONG</strong> to enable song mode, then press <kbd>Space</kbd> to play through the arrangement. Enable <strong>LOOP</strong> to loop the region set with <kbd>L</kbd>.</p>
+  <p>Click <strong>LV</strong> for LIVE mode &mdash; synth parameters stay locked across pattern changes, perfect for performing.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 9. THE MIXER -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="mixer">
+  <h2>9. The Mixer</h2>
+  <p>Click <strong>MIX</strong> in the footer to open the mixer.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: mixer with all 6 channels, VU meters, effect bars, mute/solo buttons -->
+    <img src="screenshots/mixer.png" alt="Mixer"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>mixer.png<br>Mixer with 6 channels (DRUMS S1 S2 S3 TAPE MSTR), VU meters, DLY/RVB/FLT bars, M/S buttons</div>'">
+    <figcaption>The mixer: 6 channels with volume faders, effect sends, and mute/solo.</figcaption>
+  </figure>
+
+  <p>6 channels: <strong>DRUMS</strong>, <strong>S1</strong>, <strong>S2</strong>, <strong>S3</strong>, <strong>TAPE</strong>, <strong>MSTR</strong> (master).</p>
+  <p>Each channel has: volume fader with VU meter, <strong>DLY</strong> (delay send/time/feedback), <strong>RVB</strong> (reverb send/decay), <strong>FLT</strong> (filter cutoff), <strong>M</strong> (mute), <strong>S</strong> (solo).</p>
+  <p>Click a channel label to jump to that track's editor. <strong>MSTR</strong> controls the final output.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 10. POLYRHYTHMS -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="polyrhythm">
+  <h2>10. Polyrhythms &amp; Extended Patterns</h2>
+
+  <p><strong>Extending all tracks:</strong> Click the <strong>step count badge</strong> [16] in the header to cycle through 16, 32, and 64 steps. Or click <strong>LEN</strong> in the footer.</p>
+
+  <p><strong>Per-track lengths (polyrhythms):</strong> Right-click a track label and choose a different length. For example: a 12-step hi-hat over a 16-step kick creates a shifting, evolving pattern that takes 48 steps to fully repeat.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: main grid showing different track lengths (e.g., 12 and 16), page dots visible -->
+    <img src="screenshots/polyrhythm.png" alt="Polyrhythm example"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>polyrhythm.png<br>Main grid with mixed track lengths (e.g., HH at 12 steps, KK at 16), page dots visible above grid</div>'">
+    <figcaption>Polyrhythms: different track lengths create evolving patterns.</figcaption>
+  </figure>
+
+  <p>When patterns exceed 16 steps, page dots appear above the grid. Click them or press <kbd>`</kbd> (backtick) to switch pages.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 11. ARPEGGIATOR & RANDOMIZER -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="arp">
+  <h2>11. Arpeggiator &amp; Randomizer</h2>
+
+  <h3>Arpeggiator</h3>
+  <p>Open the piano roll, then click <strong>ARP</strong> in the bottom toolbar.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: arpeggiator popup showing mode/rate/gate/octave/root/scale controls -->
+    <img src="screenshots/arpeggiator.png" alt="Arpeggiator"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>arpeggiator.png<br>Arpeggiator popup with mode (UP/DN/UD/RND), rate, gate, octaves, root note, scale selector, GENERATE button</div>'">
+    <figcaption>The arpeggiator: choose mode, rate, scale, and generate a pattern.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Control</th><th>Options</th></tr></thead>
+    <tbody>
+      <tr><td>Mode</td><td>UP, DN (down), UD (up-down), RND (random)</td></tr>
+      <tr><td>Rate</td><td>1/4, 1/8, 1/16, 1/32 notes</td></tr>
+      <tr><td>Gate</td><td>25%, 50%, 75%, 100% (note length)</td></tr>
+      <tr><td>Octaves</td><td>1, 2, or 3 octave range</td></tr>
+      <tr><td>Scale</td><td>Major, Minor, Pentatonic, Blues, Dorian, Phrygian, Mixolydian, Harmonic Minor</td></tr>
+    </tbody>
+  </table>
+  <p>Click <strong>GENERATE</strong> to write the arpeggio pattern directly into the track.</p>
+
+  <h3>Randomizer</h3>
+  <p>Click <strong>RND</strong> on the main grid for drums, or in the piano roll for melodies. Drum randomization uses musical weighting; melody randomization is scale-aware with humanized velocity.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: randomizer popup showing scale selector, density control -->
+    <img src="screenshots/randomizer.png" alt="Randomizer"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>randomizer.png<br>Randomizer popup showing scale selector, density slider, root note, and preview of randomized pattern</div>'">
+    <figcaption>The randomizer: scale-aware note generation with density control.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 12. EXPORTING -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="export">
+  <h2>12. Exporting Your Music</h2>
+  <p>Click the <strong>EXP</strong> button (rightmost file button in the footer) to export to WAV.</p>
+  <ul>
+    <li>In <strong>pattern mode</strong>: exports the current pattern (one loop)</li>
+    <li>In <strong>song mode</strong>: exports the full song arrangement</li>
+  </ul>
+  <p>The output is a 44100Hz 16-bit stereo WAV file. Type a filename and press Enter.</p>
+
+  <div class="tip">
+    <strong>Tip:</strong> Bounce your mix to tape first (open tape deck, click BNC), then export. This lets you add tape effects to the final master.
+  </div>
+
+  <figure class="screenshot">
+    <!-- REPLACE: export dialog showing filename input and progress, or the EXP button highlighted in the footer -->
+    <img src="screenshots/export.png" alt="Export dialog"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>export.png<br>Export dialog with filename input field, progress bar, or the EXP button highlighted in footer</div>'">
+    <figcaption>Type a filename and press Enter to export your pattern or song to WAV.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 13. MIDI & GAMEPADS -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="midi">
+  <h2>13. MIDI &amp; Gamepads</h2>
+
+  <h3>MIDI Controllers</h3>
+  <p>Plug in a MIDI keyboard or controller &mdash; 4TRK auto-detects it. Select the device in Settings (gear icon) if you have multiple.</p>
+
+  <figure class="screenshot">
+    <!-- REPLACE: settings popup showing MIDI device list with a connected device highlighted, theme grid, buffer options -->
+    <img src="screenshots/settings-midi.png" alt="Settings with MIDI device"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>settings-midi.png<br>Settings popup showing MIDI port selector with a connected device, theme grid, buffer size, quantize, scanline options</div>'">
+    <figcaption>Settings: select MIDI device, choose theme, configure buffer size and other options.</figcaption>
+  </figure>
+
+  <ul>
+    <li>MIDI keyboard notes are routed to the active synth track</li>
+    <li>Arm a track with <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> for recording</li>
+    <li>MIDI drum notes (36&ndash;43, General MIDI) trigger the 8 drum sounds</li>
+  </ul>
+
+  <h3>MIDI Learn</h3>
+  <ol>
+    <li>Press <kbd>L</kbd> to enter MIDI learn mode</li>
+    <li>Click any knob or fader in the app</li>
+    <li>Twist a knob on your MIDI controller</li>
+    <li>Done &mdash; mapping saved to ~/Documents/4TRK/midi_map.json</li>
+  </ol>
+
+  <figure class="screenshot">
+    <!-- REPLACE: synth editor or mixer with MIDI learn active, status bar showing "MIDI LEARN: CLICK A CONTROL" -->
+    <img src="screenshots/midi-learn.png" alt="MIDI learn mode"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>midi-learn.png<br>MIDI learn mode active: status bar showing MIDI LEARN, a knob highlighted or CC assigned message</div>'">
+    <figcaption>MIDI learn: press L, click a control, twist a knob on your hardware.</figcaption>
+  </figure>
+
+  <h3>MIDI Transport</h3>
+  <p>Hardware transport buttons work automatically: CC 119 (play/stop), CC 118 (stop), CC 117 (record arm).</p>
+
+  <h3>Gamepad (Early / Limited)</h3>
+  <p>4TRK has basic gamepad support for Xbox and PlayStation-style controllers. This is currently limited to grid navigation and basic editing &mdash; expanded gamepad controls are planned for a future update.</p>
+  <table>
+    <thead><tr><th>Button</th><th>Main Grid</th><th>Editors</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong></td><td>Toggle step / confirm</td><td>Confirm</td></tr>
+      <tr><td><strong>B</strong></td><td>Delete / back</td><td>Close popup</td></tr>
+      <tr><td><strong>X</strong></td><td>Hold for transpose</td><td>&mdash;</td></tr>
+      <tr><td><strong>Y</strong></td><td>Open editor / hold for solo-mute</td><td>Cycle synth mode</td></tr>
+      <tr><td><strong>D-pad</strong></td><td>Move cursor</td><td>Navigate params</td></tr>
+      <tr><td><strong>LB / RB</strong></td><td>Prev / next synth track</td><td>Prev / next preset</td></tr>
+      <tr><td><strong>Start</strong></td><td>Play / Stop</td><td>Play / Stop</td></tr>
+      <tr><td><strong>Back</strong></td><td>Song arranger</td><td>Hold Start: undo</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 14. LAUNCHPAD MINI MK3 -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="launchpad">
+  <h2>14. Launchpad Mini MK3</h2>
+
+  <p>4TRK has built-in support for the <strong>Novation Launchpad Mini MK3</strong>. Plug it in and 4TRK auto-detects it &mdash; no configuration needed. The Launchpad is a companion controller; the app works fully without it.</p>
+
+  <p>The Launchpad provides five modes, each with its own pad layout, LED colours, and scene-column functions. Mode buttons along the top row switch between them.</p>
+
+  <figure class="screenshot" style="max-width: 480px;">
+    <!-- REPLACE: photo or screenshot of the Launchpad Mini MK3 lit up in Drums mode with coloured rows -->
+    <img src="screenshots/launchpad-drums.png" alt="Launchpad in Drums mode"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>launchpad-drums.png<br>Launchpad Mini MK3 in Drums mode: 8 coloured rows of drum steps, scene column, mode buttons lit along top</div>'">
+    <figcaption>Launchpad Mini MK3 in Drums mode. Each row is colour-coded to a drum sound.</figcaption>
+  </figure>
+
+  <h3>Global Controls (all modes)</h3>
+  <table>
+    <thead><tr><th>Button / Chord</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Tap <strong>Session</strong></td><td>Session mode (pattern launcher)</td></tr>
+      <tr><td>Tap <strong>Drums</strong></td><td>Drums sequencer mode</td></tr>
+      <tr><td>Tap <strong>Keys</strong></td><td>Live Keys mode (live synth keyboard)</td></tr>
+      <tr><td>Hold <strong>User</strong></td><td>Shift modifier</td></tr>
+      <tr><td>User + <strong>Drums</strong></td><td>Live Drums mode (velocity-sensitive pads)</td></tr>
+      <tr><td>User + <strong>Keys</strong></td><td>Keys sequencer mode (step-edit synth notes)</td></tr>
+      <tr><td>User + <strong>&uarr;</strong></td><td>Play / Pause</td></tr>
+      <tr><td>User + <strong>&darr;</strong></td><td>Stop</td></tr>
+      <tr><td>User + <strong>&larr;</strong></td><td>Toggle record arm</td></tr>
+      <tr><td>User + <strong>&rarr;</strong></td><td>Toggle auto-follow (pages track the playhead)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Drums Mode</h3>
+  <p>Step sequencer for the 8 drum sounds. The 8&times;8 grid shows drum rows (top to bottom: KK, SN, HH, OH, CP, TM, RM, CY) &times; steps within the current page.</p>
+  <table>
+    <thead><tr><th>Control</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Tap pad</td><td>Cycle step: off &rarr; soft &rarr; hard &rarr; off</td></tr>
+      <tr><td><strong>&larr;</strong> / <strong>&rarr;</strong></td><td>Page through steps (for 16+ step patterns)</td></tr>
+      <tr><td><strong>&uarr;</strong> / <strong>&darr;</strong></td><td>Previous / next pattern</td></tr>
+      <tr><td>Scene column</td><td>Toggle per-row drum mute</td></tr>
+      <tr><td>Shift + scene</td><td>Clear that drum row (all steps, params reset)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Keys Mode (Shift+Keys)</h3>
+  <p>Step sequencer for synth notes. The grid shows 8 pitches (top = highest) &times; 8 steps. Notes placed use the currently selected sustain length.</p>
+  <table>
+    <thead><tr><th>Control</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Tap pad</td><td>Toggle a note at that step + pitch</td></tr>
+      <tr><td><strong>&larr;</strong> / <strong>&rarr;</strong></td><td>Page through steps</td></tr>
+      <tr><td><strong>&uarr;</strong> / <strong>&darr;</strong></td><td>Cycle active synth track (S1 &rarr; S2 &rarr; S3)</td></tr>
+      <tr><td>Scene 1&ndash;6</td><td>Sustain picker: &frac14;, &frac12;, 1, 2, 4, 8 steps</td></tr>
+      <tr><td>Scene 7 / 8</td><td>Pitch scroll down / up</td></tr>
+      <tr><td>Shift + Scene 1&ndash;3</td><td>Clear synth track 1/2/3 events</td></tr>
+      <tr><td>Shift + Scene 4 / 5</td><td>Preset prev / next</td></tr>
+      <tr><td>Shift + Scene 6 / 7</td><td>Scale prev / next</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Live Keys Mode (tap Keys)</h3>
+
+  <figure class="screenshot" style="max-width: 480px;">
+    <!-- REPLACE: photo or screenshot of the Launchpad in Live Keys mode with isomorphic keyboard layout lit up -->
+    <img src="screenshots/launchpad-live-keys.png" alt="Launchpad in Live Keys mode"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>launchpad-live-keys.png<br>Launchpad in Live Keys mode: isomorphic keyboard grid with white/black key colouring, cyan root notes, scene column</div>'">
+    <figcaption>Live Keys: isomorphic keyboard layout. Cyan pads mark root notes (C); white pads light up when played.</figcaption>
+  </figure>
+
+  <p>Velocity-sensitive isomorphic keyboard for live playing and recording. Within a row, each pad steps up by one pitch (semitone or scale degree). Each row above adds a 4th (5 semitones / 3 scale degrees) &mdash; chord shapes translate anywhere on the grid.</p>
+  <table>
+    <thead><tr><th>Control</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Tap pad</td><td>Note on (velocity-sensitive); release = note off</td></tr>
+      <tr><td><strong>&uarr;</strong> / <strong>&darr;</strong></td><td>Cycle active synth track</td></tr>
+      <tr><td><strong>&larr;</strong></td><td>Toggle record arm for the active track</td></tr>
+      <tr><td>Scene 1 / 2</td><td>Scale prev / next</td></tr>
+      <tr><td>Scene 3 / 4</td><td>Preset prev / next</td></tr>
+      <tr><td>Scene 7 / 8</td><td>Pitch scroll down / up</td></tr>
+      <tr><td>Shift + Scene 1&ndash;3</td><td>Clear synth track 1/2/3 events</td></tr>
+    </tbody>
+  </table>
+  <p>When record-armed and the sequencer is running, played notes are punched into the pattern with duration captured from press-to-release.</p>
+
+  <h3>Live Drums Mode (User+Drums)</h3>
+  <p>Velocity-sensitive drum pads for live playing, plus per-sample parameter nudge controls.</p>
+  <table>
+    <thead><tr><th>Region</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Bottom-right 2&times;4 pads</td><td>Drum play pads (velocity-sensitive, 8 drums)</td></tr>
+      <tr><td>Top 4 rows</td><td>Per-sample param nudge: A&minus;, A+, B&minus;, B+ (default: A=pitch, B=volume)</td></tr>
+      <tr><td>Scene column</td><td>Toggle per-drum mute</td></tr>
+      <tr><td><strong>&uarr;</strong> / <strong>&darr;</strong></td><td>Previous / next pattern</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Session Mode</h3>
+
+  <figure class="screenshot" style="max-width: 480px;">
+    <!-- REPLACE: photo or screenshot of the Launchpad in Session mode with pattern grid and mini-view -->
+    <img src="screenshots/launchpad-session.png" alt="Launchpad in Session mode"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>launchpad-session.png<br>Launchpad in Session mode: top half shows 32 pattern slots (colour-coded by density), bottom half shows mini drum view</div>'">
+    <figcaption>Session mode: pattern launcher (top) with live mini-view (bottom). Hold scene pads for beat repeat.</figcaption>
+  </figure>
+
+  <p>Pattern launcher with a live mini-view of the current pattern.</p>
+  <table>
+    <thead><tr><th>Region</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>Top 4 rows (32 slots)</td><td>Tap to jump to a pattern. Colour shows density; white = active</td></tr>
+      <tr><td>Bottom 4 rows</td><td>Read-only mini-view of current pattern (drum lanes or synth tracks)</td></tr>
+      <tr><td>Scene 1&ndash;4</td><td>Beat repeat: hold to shrink loop (/8, /4, /2, /1). Release to restore</td></tr>
+      <tr><td>Shift + Scene 5</td><td>Toggle tape record</td></tr>
+      <tr><td>Shift + Scene 6</td><td>Toggle tape source (MIC / INT)</td></tr>
+      <tr><td>Shift + Scene 7</td><td>Toggle tape mute</td></tr>
+      <tr><td>Shift + Scene 8</td><td>Clear tape</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 15. TIPS & TRICKS -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="tips">
+  <h2>15. Tips &amp; Tricks</h2>
+  <ul>
+    <li><kbd>Cmd</kbd>+<kbd>Z</kbd> undoes almost everything &mdash; pattern edits, knob changes, note moves</li>
+    <li><kbd>Cmd</kbd>+<kbd>C</kbd> / <kbd>Cmd</kbd>+<kbd>V</kbd> copies and pastes entire patterns between slots</li>
+    <li><kbd>Cmd</kbd>+<kbd>Left</kbd>/<kbd>Right</kbd> shifts all pattern steps left or right</li>
+    <li><strong>Shift+click</strong> a mute bar to solo that track</li>
+    <li><strong>Right-click any knob</strong> to reset it to default</li>
+    <li><kbd>P</kbd> toggles preview sounds &mdash; hear notes as you place them</li>
+    <li><kbd>Shift</kbd>+<kbd>T</kbd> cycles through 32 built-in themes. Make your own by dropping a .json file in ~/Documents/4TRK/themes/</li>
+  </ul>
+
+  <figure class="screenshot">
+    <!-- REPLACE: the app in 2-3 different themes side by side, or one alternate theme showing the color difference -->
+    <img src="screenshots/themes.png" alt="Theme examples"
+         onerror="this.outerHTML='<div class=placeholder><span class=label>SCREENSHOT</span>themes.png<br>The app shown in 2-3 different themes (e.g., amber, blue, pink) to show the variety of color palettes</div>'">
+    <figcaption>32 built-in themes. Press Shift+T to cycle, or drop custom .json files in ~/Documents/4TRK/themes/.</figcaption>
+  </figure>
+
+  <ul>
+    <li>Projects are tiny (~2&ndash;5KB compressed JSON) &mdash; easy to share or back up</li>
+    <li>Custom wavetables: drop .wav files into ~/Documents/4TRK/wavetables/ (single-cycle or Serum-format)</li>
+    <li>SFZ instruments: drop .sfz instrument folders into ~/Documents/4TRK/sfz/</li>
+    <li>The app ships with demo projects &mdash; click LOAD to explore them</li>
+  </ul>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 16. KEYBOARD SHORTCUTS -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="shortcuts">
+  <h2>16. Keyboard Shortcuts</h2>
+
+  <h3>Global (work on every screen)</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Space</kbd></td><td>Play / Stop</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>Z</kbd></td><td>Undo</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>C</kbd></td><td>Copy current pattern</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>V</kbd></td><td>Paste pattern</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>Left</kbd>/<kbd>Right</kbd></td><td>Previous / next preset</td></tr>
+      <tr><td><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></td><td>Arm synth track 1/2/3 for recording</td></tr>
+      <tr><td><kbd>4</kbd></td><td>Record to tape (internal)</td></tr>
+      <tr><td><kbd>5</kbd></td><td>Record to tape (microphone)</td></tr>
+      <tr><td><kbd>0</kbd></td><td>Mute / unmute tape track</td></tr>
+      <tr><td><kbd>L</kbd></td><td>Toggle MIDI learn mode</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>T</kbd></td><td>Cycle visual theme</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>?</kbd></td><td>Open help overlay</td></tr>
+      <tr><td><kbd>F11</kbd> / <kbd>Shift</kbd>+<kbd>F</kbd></td><td>Toggle fullscreen</td></tr>
+      <tr><td><kbd>P</kbd></td><td>Toggle preview sounds</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>Close popup / back</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Main Grid</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd></td><td>Move step cursor</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>Toggle drum hit / open piano roll on synth row</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Cycle drum repeat (1x/2x/4x) or arm synth for recording</td></tr>
+      <tr><td><kbd>Delete</kbd></td><td>Remove note or drum hit at cursor</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Cycle active synth track (S1 &rarr; S2 &rarr; S3)</td></tr>
+      <tr><td><kbd>`</kbd></td><td>Cycle grid page</td></tr>
+      <tr><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Change keyboard octave</td></tr>
+      <tr><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Increase / decrease velocity</td></tr>
+      <tr><td><kbd>A</kbd></td><td>Toggle arpeggiator on active synth track</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>A</kbd></td><td>Cycle arpeggiator mode (UP/DN/UD/RND)</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>&larr;</kbd>/<kbd>&rarr;</kbd></td><td>Shift pattern steps left/right</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>&larr;</kbd>/<kbd>&rarr;</kbd></td><td>Switch to previous/next pattern</td></tr>
+      <tr><td><kbd>Z</kbd>-<kbd>M</kbd> / <kbd>S</kbd>-<kbd>K</kbd></td><td>Play notes on keyboard piano</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Piano Roll</h3>
+  <table>
+    <thead><tr><th>Key / Action</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Click grid</td><td>Place note</td></tr>
+      <tr><td>Drag note</td><td>Move (pitch + time)</td></tr>
+      <tr><td>Drag right edge</td><td>Resize duration</td></tr>
+      <tr><td>Right-click note</td><td>Delete note</td></tr>
+      <tr><td><kbd>Shift</kbd>+drag grid</td><td>Rubber-band select</td></tr>
+      <tr><td><kbd>Shift</kbd>+click note</td><td>Toggle in selection</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>A</kbd></td><td>Select all notes</td></tr>
+      <tr><td><kbd>D</kbd></td><td>Duplicate selection</td></tr>
+      <tr><td><kbd>Delete</kbd></td><td>Delete selected notes</td></tr>
+      <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Scroll view (pitch)</td></tr>
+      <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Scroll view (time)</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>&uarr;</kbd>/<kbd>&darr;</kbd></td><td>Transpose semitone</td></tr>
+      <tr><td><kbd>Cmd</kbd>+<kbd>&uarr;</kbd>/<kbd>&darr;</kbd></td><td>Transpose octave</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>&larr;</kbd>/<kbd>&rarr;</kbd></td><td>Nudge note position</td></tr>
+      <tr><td><kbd>Cmd</kbd>+scroll</td><td>Zoom in / out</td></tr>
+      <tr><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Adjust velocity</td></tr>
+      <tr><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Change keyboard octave</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Toggle record arm</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Synth Editor</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Navigate knobs</td></tr>
+      <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Adjust focused knob</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Cycle synth mode (SYN/DUO/FM/WTB/SFZ)</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Toggle record arm</td></tr>
+      <tr><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Change keyboard octave</td></tr>
+      <tr><td><kbd>Z</kbd>-<kbd>M</kbd> / <kbd>S</kbd>-<kbd>K</kbd></td><td>Play notes on keyboard</td></tr>
+      <tr><td><kbd>L</kbd></td><td>MIDI learn (click knob, twist CC)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Drum Editor</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Navigate parameters</td></tr>
+      <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Adjust focused parameter</td></tr>
+      <tr><td><kbd>Space</kbd></td><td>Preview drum sound</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tape Deck</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Navigate knobs</td></tr>
+      <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Adjust focused knob</td></tr>
+      <tr><td><kbd>Z</kbd>-<kbd>M</kbd> / <kbd>S</kbd>-<kbd>K</kbd></td><td>Play notes on keyboard</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Song Arranger</h3>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>&uarr;</kbd> / <kbd>&darr;</kbd></td><td>Navigate rows</td></tr>
+      <tr><td><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></td><td>Change pattern number</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>Insert new row</td></tr>
+      <tr><td><kbd>Delete</kbd></td><td>Remove row</td></tr>
+      <tr><td><kbd>D</kbd></td><td>Duplicate row</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Cycle repeat count (1&ndash;4x)</td></tr>
+      <tr><td><kbd>L</kbd></td><td>Set loop start / end</td></tr>
+      <tr><td><kbd>P</kbd></td><td>Play from cursor</td></tr>
+      <tr><td><kbd>Space</kbd></td><td>Play / Stop</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Mouse Actions</h3>
+  <table>
+    <thead><tr><th>Action</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Click drum cell</td><td>Cycle: off &rarr; soft &rarr; hard</td></tr>
+      <tr><td>Long-press drum cell</td><td>Open per-step FX editor</td></tr>
+      <tr><td>Right-click drum cell</td><td>Remove hit</td></tr>
+      <tr><td>Click synth cell</td><td>Open piano roll</td></tr>
+      <tr><td>Right-click synth cell</td><td>Delete events at step</td></tr>
+      <tr><td>Click track label</td><td>Open sound editor</td></tr>
+      <tr><td>Right-click track label</td><td>Track tools / set length</td></tr>
+      <tr><td>Click mute bar</td><td>Toggle mute</td></tr>
+      <tr><td>Shift+click mute bar</td><td>Toggle solo</td></tr>
+      <tr><td>Drag knob up/down</td><td>Adjust parameter</td></tr>
+      <tr><td>Right-click knob</td><td>Reset to default</td></tr>
+      <tr><td>Scroll wheel (piano roll)</td><td>Scroll pitch</td></tr>
+      <tr><td>Cmd+scroll (piano roll)</td><td>Zoom</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Gamepad</h3>
+  <table>
+    <thead><tr><th>Button</th><th>Main Grid</th><th>Editors</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong></td><td>Toggle step</td><td>Confirm</td></tr>
+      <tr><td><strong>B</strong></td><td>Delete / back</td><td>Close</td></tr>
+      <tr><td><strong>X</strong></td><td>Hold: transpose</td><td>&mdash;</td></tr>
+      <tr><td><strong>Y</strong></td><td>Open editor</td><td>Cycle mode</td></tr>
+      <tr><td><strong>D-pad</strong></td><td>Move cursor</td><td>Navigate</td></tr>
+      <tr><td><strong>LB / RB</strong></td><td>Prev / next track</td><td>Prev / next preset</td></tr>
+      <tr><td><strong>Start</strong></td><td>Play / Stop</td><td>Play / Stop</td></tr>
+      <tr><td><strong>Back</strong></td><td>Song arranger</td><td>Hold Start: undo</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 16. GLOSSARY -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 17. TROUBLESHOOTING -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="troubleshooting">
+  <h2>17. Troubleshooting</h2>
+
+  <h3>Audio Crackling / Dropouts</h3>
+  <p>Crackling or glitchy audio usually means the audio buffer is too small for your system to keep up. This is most common on <strong>Linux</strong> (PulseAudio / PipeWire) but can happen on any platform under heavy CPU load.</p>
+  <p><strong>Fix:</strong> Open Settings (gear icon) &rarr; Audio tab &rarr; increase the <strong>Buffer</strong> size. Start with 512; if crackling persists, try 1024. Larger buffers add a small amount of latency but eliminate dropouts.</p>
+  <table>
+    <thead><tr><th>Buffer Size</th><th>Latency</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td>128</td><td>~3 ms</td><td>Fast machines, macOS CoreAudio</td></tr>
+      <tr><td>256 (default)</td><td>~6 ms</td><td>Most macOS / Windows setups</td></tr>
+      <tr><td>512</td><td>~12 ms</td><td>Linux, older machines, or heavy projects</td></tr>
+      <tr><td>1024</td><td>~23 ms</td><td>Fallback for persistent issues</td></tr>
+    </tbody>
+  </table>
+
+  <h3>No Sound</h3>
+  <ul>
+    <li>Check that the correct <strong>output device</strong> is selected in Settings &rarr; Audio tab. "AUTO" uses the system default.</li>
+    <li>Make sure tracks are not muted &mdash; click the coloured bars on the left edge of the main grid to unmute.</li>
+    <li>If sound disappears after unplugging headphones or switching audio devices, 4TRK will try to recover automatically. If it doesn't, restart the app.</li>
+  </ul>
+
+  <h3>MIDI Controller Not Detected</h3>
+  <ul>
+    <li>Open Settings (gear icon) and check the MIDI device list. Click your device to select it.</li>
+    <li>If your device doesn't appear, make sure it's plugged in <em>before</em> launching 4TRK, or restart the app after connecting.</li>
+    <li>On Linux, ensure your user has permission to access MIDI devices (typically the <code>audio</code> group).</li>
+  </ul>
+
+  <h3>High CPU Usage</h3>
+  <ul>
+    <li>DX7 (FM) synth voices are the most CPU-intensive. If a project is struggling, switch one or more synth tracks to a lighter engine (Synth, Dual, or Wavetable).</li>
+    <li>Reduce the number of active tracks or mute tracks you're not using.</li>
+    <li>Increase the audio buffer size &mdash; larger buffers give the CPU more time per callback.</li>
+  </ul>
+
+  <h3>Linux-Specific Notes</h3>
+  <ul>
+    <li><strong>PipeWire</strong> generally offers better low-latency performance than PulseAudio. If your distro supports it, switching to PipeWire may help with audio quality.</li>
+    <li>If you get a "PortAudio" error on launch, install the <code>libportaudio2</code> package (or equivalent for your distro).</li>
+    <li>SDL2 is required for the display. Install <code>libsdl2-dev</code> if you see import errors.</li>
+  </ul>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 18. GLOSSARY -->
+<!-- ════════════════════════════════════════════════════════ -->
+
+<section id="glossary">
+  <h2>18. Glossary</h2>
+  <table>
+    <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pattern</strong></td><td>A loop of up to 64 steps containing drum hits, synth notes, and tape audio</td></tr>
+      <tr><td><strong>Step</strong></td><td>One 16th-note time division in the sequencer</td></tr>
+      <tr><td><strong>Bank</strong></td><td>A group of 8 patterns (A, B, C, D = 32 total)</td></tr>
+      <tr><td><strong>ADSR</strong></td><td>Attack, Decay, Sustain, Release &mdash; the shape of a sound over time</td></tr>
+      <tr><td><strong>FM Synthesis</strong></td><td>Frequency Modulation &mdash; one oscillator modulates another for complex timbres</td></tr>
+      <tr><td><strong>Wavetable</strong></td><td>A set of single-cycle waveforms that can be morphed between</td></tr>
+      <tr><td><strong>SFZ</strong></td><td>A sample-based instrument format (folder of .wav files + .sfz definition)</td></tr>
+      <tr><td><strong>Polyrhythm</strong></td><td>Different tracks running at different lengths, creating shifting patterns</td></tr>
+      <tr><td><strong>Swing</strong></td><td>Delays every other step slightly for a shuffle/groove feel</td></tr>
+      <tr><td><strong>Quantize</strong></td><td>Snap recorded notes to the nearest grid position</td></tr>
+      <tr><td><strong>Bounce</strong></td><td>Render audio offline (e.g., mix to tape, export to WAV)</td></tr>
+      <tr><td><strong>Slice</strong></td><td>Cut a section of tape audio and assign it to a drum slot</td></tr>
+      <tr><td><strong>MIDI CC</strong></td><td>MIDI Control Change &mdash; a knob/fader message from a hardware controller</td></tr>
+      <tr><td><strong>MIDI Learn</strong></td><td>Map a physical MIDI CC to a software parameter by example</td></tr>
+      <tr><td><strong>LIVE mode</strong></td><td>Synth parameters persist when switching patterns (for performance)</td></tr>
+      <tr><td><strong>Song mode</strong></td><td>Play patterns in sequence as defined in the song arranger</td></tr>
+      <tr><td><strong>Arm</strong></td><td>Enable a track for live recording (track label flashes red)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</div><!-- .wrapper -->
+</body>
+</html>
